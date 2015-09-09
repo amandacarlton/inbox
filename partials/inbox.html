@@ -1,0 +1,21 @@
+<div class="container">
+  <i class="fa fa-check-square-o btn btn-default"></i>
+  <i class="fa fa-square-o btn btn-default"></i>
+  <i class="fa fa-plus-square-o btn btn-default"></i>
+  <input type="submit" class="btn btn-default" value="Mark As Read">
+  <input type="submit" class="btn btn-default" value="Mark As Unread">
+  <input type="submit" class="btn btn-default" value="Apply Filter">
+  <input type="submit" class="btn btn-default" value="Remove Filter">
+  <input type="submit" class="btn btn-default" value="Remove Filter">
+  <div class = "each" ng-repeat = "message in messages">
+    <div class="check">
+    <input type="checkbox" ng-model="check">
+  </div>
+    <div class="icon">
+      <i class="fa fa-star-o"></i>
+    </div>
+    <div class="message">
+    {{message.subject}}
+  </div>
+  </div>
+</div>

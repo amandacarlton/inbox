@@ -1,0 +1,29 @@
+.check{
+  float: left;
+  margin-right: 10px;
+  margin-top: 15px
+}
+
+.icon{
+  float: left;
+  margin-right: 70px;
+  margin-top: 15px
+}
+
+.message{
+  float: left;
+  margin-top: 15px
+}
+
+.each{
+  border-bottom: 1px solid lightgrey;
+  height: 40px;
+}
+
+/*div{
+  border: 1px solid black;
+}*/
+
+.item{
+  height: 50px;
+}
