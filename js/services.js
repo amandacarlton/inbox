@@ -6,23 +6,27 @@ var messages = [
   {
     subject: "HEY",
     starred: false,
-    read: false
+    read: false,
+    filters:[]
 
   },
   {
     subject: "Do you see this",
     starred: false,
-    read: false
+    read: false,
+    filters:[]
   },
   {
     subject: "How are you?",
     starred: false,
-    read: false
+    read: false,
+    filters:[]
   },
   {
     subject: "Does this look like gmail",
     starred: false,
-    read: false
+    read: false,
+    filters:[]
   }
 ];
 

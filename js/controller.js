@@ -59,6 +59,7 @@ $scope.clickedlist = function () {
 
 $scope.nonclickedlist = function () {
   $scope.$storage.activated = InboxService.nonstoragearray();
+  $scope.anySelect();
 };
 
 $scope.submitindex = function (num) {
@@ -77,8 +78,6 @@ $scope.read = function () {
     }
   }
 $scope.readcount = InboxService.readcount();
-console.log($scope.readcount);
-  console.log($scope.messages);
 };
 
 $scope.unread = function () {
@@ -88,6 +87,27 @@ $scope.unread = function () {
           $scope.messages[i].read = false;
   }
 } $scope.readcount = InboxService.readcount();
-console.log($scope.messages);
 };
+
+$scope.delete = function () {
+  for (var i = 0; i < $scope.messages.length; i++) {
+      if($scope.$storage.activated[i]===true){
+          $scope.messages.splice(i,1);
+          $scope.$storage.activated.splice(i,1);
+  }
+} $scope.readcount = InboxService.readcount();
+  $scope.anySelect();
+};
+
+$scope.addlabel = function (filter) {
+  console.log(filter);
+  for (var i = 0; i < $scope.messages.length; i++) {
+      if($scope.$storage.activated[i]===true){
+        if(filter != "applyfilter")
+          if($scope.messages[i].filters.indexOf(filter)===-1)
+          $scope.messages[i].filters.push(filter);
+  }
+}
+};
+
 }]);

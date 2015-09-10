@@ -4,10 +4,18 @@
   <i ng-show="anyselected" class="fa fa-plus-square-o btn btn-default"></i>
   <input ng-click="read()" type="submit" class="btn btn-default" value="Mark As Read" ng-disabled="!clicked && !anyselected">
   <input ng-click="unread()" type="submit" class="btn btn-default" value="Mark As Unread" ng-disabled="!clicked && !anyselected">
-  <input type="submit" class="btn btn-default" value="Apply Filter">
+  <select  type="submit" ng-model="filter" ng-change="addlabel(filter); filter='0'"  ng-init="filter=filter[0]" class="btn btn-default" value="Apply Filter">
+    <option value="applyfilter">Apply Filter</option>
+    <option value="work">Work</option>
+    <option value="dev">Dev</option>
+    <option value="personal">Personal</option>
+  </select>
   <input type="submit" class="btn btn-default" value="Remove Filter">
-  <i class="fa fa-trash-o btn btn-default"></i>
-  <p> Unread Messages : {{readcount}}
+  <i ng-click="delete()" class="fa fa-trash-o btn btn-default"></i>
+  <p> Unread <ng-pluralize count="readcount"
+                   when="{1: 'Message',
+                     'other': 'Messages'}">
+</ng-pluralize> : {{readcount}}
   <div class = "each" ng-repeat = "message in messages track by $index" ng-class="{highlight:$storage.activated[$index]}">
     <div class="check">
     <input ng-click="submitindex($index); anySelect()" type="checkbox" ng-checked="$storage.activated[$index]">
@@ -17,7 +25,12 @@
       <i ng-click="star(); singleStar()" ng-show="staricon" class="fa fa-star"></i>
     </div>
     <div class="message">
+      <div class="filtered" ng-repeat="filter in message.filters | orderBy:'toString()'">
+        {{filter}}
+      </div>
+    <div class="subject">
     {{message.subject}}
+  </div>
   </div>
   </div>
 </div>
