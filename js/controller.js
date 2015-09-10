@@ -1,7 +1,7 @@
 
 
 app.controller("InboxController", ['$scope', 'InboxService', '$location', '$localStorage',
-    '$sessionStorage', function ($scope, InboxService, $location, $localStorage, $sessionStorage ) {
+    '$sessionStorage', 'ModalService', function ($scope, InboxService, $location, $localStorage, $sessionStorage, ModalService ) {
 $scope.name = "amanda";
 $scope.clicked = false;
 $scope.staricon = false;
@@ -109,5 +109,8 @@ $scope.addlabel = function (filter) {
   }
 }
 };
+
+
+
 
 }]);
