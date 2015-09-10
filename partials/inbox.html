@@ -1,15 +1,15 @@
 <div class="container">
-  <i class="fa fa-check-square-o btn btn-default"></i>
-  <i class="fa fa-square-o btn btn-default"></i>
-  <i class="fa fa-plus-square-o btn btn-default"></i>
-  <input type="submit" class="btn btn-default" value="Mark As Read">
-  <input type="submit" class="btn btn-default" value="Mark As Unread">
+  <i ng-click="noicon(); persist()" ng-show="clicked" class="fa fa-check-square-o btn btn-default"></i>
+  <i ng-click="icon(); persist()" ng-hide="clicked" class="fa fa-square-o btn btn-default"></i>
+  <i ng-show="anyselected" class="fa fa-plus-square-o btn btn-default"></i>
+  <input type="submit" class="btn btn-default" value="Mark As Read" ng-disabled="!clicked && !anyselected">
+  <input type="submit" class="btn btn-default" value="Mark As Unread" ng-disabled="!clicked && !anyselected">
   <input type="submit" class="btn btn-default" value="Apply Filter">
   <input type="submit" class="btn btn-default" value="Remove Filter">
-  <input type="submit" class="btn btn-default" value="Remove Filter">
-  <div class = "each" ng-repeat = "message in messages">
-    <div class="check">
-    <input type="checkbox" ng-model="check">
+  <i class="fa fa-trash-o btn btn-default"></i>
+  <div class = "each" ng-repeat = "message in messages track by $index" ng-class="{highlight:clicked || message.selected || $storage.test[$index]}">
+    <div class="check" >
+    <input ng-click="singleSelect(); persist()" type="checkbox" ng-checked="$storage.test[$index]">
   </div>
     <div class="icon">
       <i class="fa fa-star-o"></i>

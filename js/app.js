@@ -1,4 +1,4 @@
-var app = angular.module("Mail", ['ngRoute']);
+var app = angular.module("Mail", ['ngRoute','ngStorage']);
 
 
 app.config(function($routeProvider, $locationProvider) {
