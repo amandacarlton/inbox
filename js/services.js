@@ -1,4 +1,4 @@
-app.factory('InboxService', function () {
+app.factory('InboxService', function ($http) {
 var anyselected = false;
 var selected = false;
 var clicked = false;
@@ -31,10 +31,9 @@ var messages = [
 ];
 
 var services = {
-  messages: function () {
-    console.log(messages);
-    return messages;
-  },
+  // messages: function () {
+  //   return messages;
+  // },
 
   // iconButton: function () {
   //   for (var i = 0; i < messages.length; i++) {
@@ -77,7 +76,7 @@ var services = {
       for (var i = 0; i < messages.length; i++) {
         store.push(true);
       }
-      console.log(store);
+
       return store;
 
     },
@@ -87,7 +86,7 @@ var services = {
       for (var i = 0; i < messages.length; i++) {
         store.push(false);
       }
-      console.log(store);
+
       return store;
     },
 
@@ -97,8 +96,16 @@ var services = {
         if(messages[i].read === false){
           readarray.push(messages[i]);
         }
-      } return readarray.length;
-    }
+      } console.log(readarray);
+      return readarray.length;
+    },
+
+    messages: function () {
+      return $http.get('http://localhost:3000/api/messages').then(function(response) {
+    return response.data;
+  });
+},
+
 
 
 

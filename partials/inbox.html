@@ -12,10 +12,11 @@
   </select>
   <input type="submit" class="btn btn-default" value="Remove Filter">
   <i ng-click="delete()" class="fa fa-trash-o btn btn-default"></i>
-  <p> Unread <ng-pluralize count="readcount"
+  <p> Unread <ng-pluralize count="unreadcount"
                    when="{1: 'Message',
-                     'other': 'Messages'}">
-</ng-pluralize> : {{readcount}}
+                     'other': 'Messages',
+                   'NAN': '0'}">
+</ng-pluralize> : {{unreadcount}}
   <div class = "each" ng-repeat = "message in messages track by $index" ng-class="{highlight:$storage.activated[$index]}">
     <div class="check">
     <input ng-click="submitindex($index); anySelect()" type="checkbox" ng-checked="$storage.activated[$index]">

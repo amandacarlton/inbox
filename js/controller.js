@@ -2,6 +2,15 @@
 
 app.controller("InboxController", ['$scope', 'InboxService', '$location', '$localStorage',
     '$sessionStorage', 'ModalService', function ($scope, InboxService, $location, $localStorage, $sessionStorage, ModalService ) {
+
+InboxService.messages().then(function (messages) {
+
+$scope.messages = messages;
+$scope.readcount();
+$scope.anySelect();
+console.log($scope.messages);
+});
+
 $scope.name = "amanda";
 $scope.clicked = false;
 $scope.staricon = false;
@@ -15,7 +24,7 @@ $scope.$storage = $localStorage;
 // };
 
 // $scope.anyselected = false;
-$scope.messages = InboxService.messages();
+// $scope.messages = InboxService.messages();
 
 
 $scope.star = function () {
@@ -50,8 +59,18 @@ $scope.anySelect = function () {
   }
 };
 
-$scope.readcount = InboxService.readcount();
-console.log($scope.readcount);
+$scope.readcount = function () {
+  var unreadarray = [];
+  for (var i = 0; i < $scope.messages.length; i++) {
+    if($scope.messages[i].read === false){
+      unreadarray.push($scope.messages[i]);
+    }
+  }
+  console.log(unreadarray);
+  $scope.unreadcount= unreadarray.length;
+};
+
+
 
 $scope.clickedlist = function () {
   $scope.$storage.activated = InboxService.storagearray();
@@ -75,18 +94,21 @@ $scope.read = function () {
   for (var i = 0; i < $scope.messages.length; i++) {
     if($scope.$storage.activated[i]===true){
       $scope.messages[i].read = true;
+      console.log($scope.messages[i]);
     }
   }
-$scope.readcount = InboxService.readcount();
+$scope.readcount();
+
 };
 
 $scope.unread = function () {
-  console.log("working");
   for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
           $scope.messages[i].read = false;
+
   }
-} $scope.readcount = InboxService.readcount();
+} $scope.readcount();
+
 };
 
 $scope.delete = function () {
@@ -95,19 +117,20 @@ $scope.delete = function () {
           $scope.messages.splice(i,1);
           $scope.$storage.activated.splice(i,1);
   }
-} $scope.readcount = InboxService.readcount();
+} $scope.readcount();
   $scope.anySelect();
 };
 
 $scope.addlabel = function (filter) {
-  console.log(filter);
   for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
         if(filter != "applyfilter")
           if($scope.messages[i].filters.indexOf(filter)===-1)
           $scope.messages[i].filters.push(filter);
+          console.log($scope.messages[i]);
   }
 }
+
 };
 
 
