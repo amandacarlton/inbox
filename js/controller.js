@@ -1,7 +1,7 @@
 
 
 app.controller("InboxController", ['$scope', 'InboxService', '$location', '$localStorage',
-'$sessionStorage', 'ModalService', function ($scope, InboxService, $location, $localStorage, $sessionStorage, ModalService ) {
+'$sessionStorage', 'ModalService', '$http', function ($scope, InboxService, $location, $localStorage, $sessionStorage, ModalService, $http ) {
 
   InboxService.messages().then(function (messages) {
 
@@ -94,6 +94,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
     for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
         $scope.messages[i].read = true;
+        $http.post('http://localhost:3000/api/read', $scope.messages[i]);
         console.log($scope.messages[i]);
       }
     }
@@ -105,6 +106,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
     for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
         $scope.messages[i].read = false;
+        $http.post('http://localhost:3000/api/read', $scope.messages[i]);
 
       }
     } $scope.readcount();
@@ -141,7 +143,15 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
   };
 
-  
+  $scope.stardb = function (message) {
+    InboxService.starredmessages(message);
+  };
+
+  // $scope.readdb = function () {
+  //
+  //   InboxService.readmessages(message);
+  // };
+
 
 
 

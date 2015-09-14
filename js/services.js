@@ -2,33 +2,33 @@ app.factory('InboxService', function ($http) {
 var anyselected = false;
 var selected = false;
 var clicked = false;
-var messages = [
-  {
-    subject: "HEY",
-    starred: false,
-    read: false,
-    filters:[]
-
-  },
-  {
-    subject: "Do you see this",
-    starred: false,
-    read: false,
-    filters:[]
-  },
-  {
-    subject: "How are you?",
-    starred: false,
-    read: false,
-    filters:[]
-  },
-  {
-    subject: "Does this look like gmail",
-    starred: false,
-    read: false,
-    filters:[]
-  }
-];
+// var messages = [
+//   {
+//     subject: "HEY",
+//     starred: false,
+//     read: false,
+//     filters:[]
+//
+//   },
+//   {
+//     subject: "Do you see this",
+//     starred: false,
+//     read: false,
+//     filters:[]
+//   },
+//   {
+//     subject: "How are you?",
+//     starred: false,
+//     read: false,
+//     filters:[]
+//   },
+//   {
+//     subject: "Does this look like gmail",
+//     starred: false,
+//     read: false,
+//     filters:[]
+//   }
+// ];
 
 var services = {
   // messages: function () {
@@ -105,6 +105,16 @@ var services = {
     return response.data;
   });
 },
+
+    starredmessages: function (message) {
+      console.log(message);
+      $http.post('http://localhost:3000/api/starred', message);
+    },
+
+    readmessages: function (message) {
+      console.log(message);
+      $http.post('http://localhost:3000/api/read', message);
+    },
 
 
 
