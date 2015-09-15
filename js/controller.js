@@ -8,6 +8,8 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
     $scope.messages = messages;
     $scope.readcount();
     $scope.anySelect();
+    $scope.filtercheck();
+    console.log($scope.messages);
     console.log($scope.messages);
   });
 
@@ -68,7 +70,6 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
         unreadarray.push($scope.messages[i]);
       }
     }
-    console.log(unreadarray);
     $scope.unreadcount= unreadarray.length;
   };
 
@@ -97,7 +98,6 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
       if($scope.$storage.activated[i]===true){
         $scope.messages[i].read = true;
         $http.post('http://localhost:3000/api/read', $scope.messages[i]);
-        console.log($scope.messages[i]);
       }
     }
     $scope.readcount();
@@ -128,21 +128,21 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
   $scope.create = function (filter, i) {
     if($scope.$storage.activated[i]===true){
-    if(filter === "createnew")
-    $scope.showcreate = true;
-  }
+      if(filter === "createnew")
+      $scope.showcreate = true;
+    }
   };
 
   $scope.addlabel = function (filter) {
     for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
         if(filter != "applyfilter")
-          if(filter != "createnew")
-          if($scope.messages[i].filters.indexOf(filter)===-1){
-            $scope.messages[i].filters.push(filter);
-            $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
-          }
-        } $scope.create(filter, i);
+        if(filter != "createnew")
+        if($scope.messages[i].filters.indexOf(filter)===-1){
+          $scope.messages[i].filters.push(filter);
+          $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
+        }
+      } $scope.create(filter, i);
     }
 
   };
@@ -153,23 +153,34 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
         if($scope.messages[i].filters.indexOf(filter)===-1){
           $scope.messages[i].filters.push(filter);
         }
-  } $scope.showcreate= false;
- }
-};
+      } $scope.showcreate= false;
+    }
+  };
 
- $scope.removeLabel = function (filter) {
-   for (var i = 0; i < $scope.messages.length; i++) {
-       if($scope.$storage.activated[i]===true){
-         var filterIndex = $scope.messages[i].filters.indexOf(filter);
-         $scope.messages[i].filters.splice(filterIndex,1);
-   }
- } console.log($scope.messages);
- };
+  $scope.removeLabel = function (filter) {
+    for (var i = 0; i < $scope.messages.length; i++) {
+      if($scope.$storage.activated[i]===true){
+        var filterIndex = $scope.messages[i].filters.indexOf(filter);
+        $scope.messages[i].filters.splice(filterIndex,1);
+        $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
+      }
+    }
+  };
 
   $scope.stardb = function (message) {
     InboxService.starredmessages(message);
   };
 
+  $scope.filtercheck = function () {
+    var selectlabel = ["Apply Filter", "Create New"];
+    for (var i = 0; i < $scope.messages.length; i++) {
+      for (var j = 0; j < $scope.messages[i].filters.length; j++) {
+        if(selectlabel.indexOf($scope.messages[i].filters[j])<0){
+          selectlabel.push($scope.messages[i].filters[j]);
+        }
+      }
+    } $scope.filters= selectlabel;
+  };
   // $scope.readdb = function () {
   //
   //   InboxService.readmessages(message);
