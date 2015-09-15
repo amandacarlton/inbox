@@ -1,4 +1,4 @@
-var app = angular.module("Mail", ['ngRoute','ngStorage', 'angularModalService']);
+var app = angular.module("Mail", ['ngRoute','ngStorage', 'ui.bootstrap', 'angularModalService']);
 
 
 app.config(function($routeProvider, $locationProvider) {

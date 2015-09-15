@@ -48,3 +48,11 @@ select{
 .subject{
   float:left;
 }
+
+.bold{
+  font-weight: bolder;
+}
+
+.normal{
+  background-color: LightGrey;
+}

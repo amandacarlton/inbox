@@ -1,6 +1,6 @@
 <div class="container">
   <i ng-click="nonclickedlist(); noicon()" ng-show="clicked" class="fa fa-check-square-o btn btn-default"></i>
-  <i ng-click="clickedlist();icon()" ng-hide="clicked" class="fa fa-square-o btn btn-default"></i>
+  <i ng-click="clickedlist(); icon()" ng-hide="clicked" class="fa fa-square-o btn btn-default"></i>
   <i ng-show="anyselected" class="fa fa-plus-square-o btn btn-default"></i>
   <input ng-click="read(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Read" ng-disabled="!clicked && !anyselected">
   <input ng-click="unread(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Unread" ng-disabled="!clicked && !anyselected">
@@ -11,15 +11,17 @@
     <option value="personal">Personal</option>
     <option value="createnew">Create New...</option>
   </select>
-  <input type="submit" class="btn btn-default" value="Remove Filter">
+  <input type="submit" ng-change="removeLabel(filter)" class="btn btn-default" value="Remove Filter">
   <i ng-click="delete()" class="fa fa-trash-o btn btn-default"></i>
-  <input type="text" ng-model="filter" ng-click="addlabel()" ng-show="showcreate" placeholder="new label"></input>
+  <form ng-submit="addUniqueLabel(filterinput)">
+  <input type="text" ng-model="filterinput" ng-show="showcreate" placeholder="new label"></input>
+</form>
   <p> Unread <ng-pluralize count="unreadcount"
                    when="{1: 'Message',
                      'other': 'Messages',
                    'NAN': '0'}">
 </ng-pluralize> : {{unreadcount}}
-  <div class = "each" ng-repeat = "message in messages track by $index" ng-class="{highlight:$storage.activated[$index]}">
+  <div class = "each" ng-repeat = "message in messages track by $index" ng-class="{'highlight':$storage.activated[$index], 'bold':!messages[$index].read, 'normal':messages[$index].read}">
     <div class="check">
     <input ng-click="submitindex($index); anySelect()" type="checkbox" ng-checked="$storage.activated[$index]">
     </div>

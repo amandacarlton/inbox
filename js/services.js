@@ -70,8 +70,13 @@ var services = {
   //     }
   //     return anyselected;
   //   },
+    messages: function () {
+      return $http.get('http://localhost:3000/api/messages').then(function(response) {
+    return response.data;
+  });
+},
 
-    storagearray: function () {
+    storagearray: function (messages) {
       var store = [];
       for (var i = 0; i < messages.length; i++) {
         store.push(true);
@@ -81,7 +86,7 @@ var services = {
 
     },
 
-    nonstoragearray: function () {
+    nonstoragearray: function (messages) {
       var store = [];
       for (var i = 0; i < messages.length; i++) {
         store.push(false);
@@ -100,11 +105,6 @@ var services = {
       return readarray.length;
     },
 
-    messages: function () {
-      return $http.get('http://localhost:3000/api/messages').then(function(response) {
-    return response.data;
-  });
-},
 
     starredmessages: function (message) {
       console.log(message);

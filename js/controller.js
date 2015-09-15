@@ -36,11 +36,13 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   };
 
   $scope.icon = function () {
+    console.log("check");
     $scope.clicked=true;
     // InboxService.iconButton();
   };
   //
   $scope.noicon = function () {
+    console.log("un check");
     $scope.clicked=false;
     // InboxService.noIconButton();
   };
@@ -73,11 +75,11 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
 
   $scope.clickedlist = function () {
-    $scope.$storage.activated = InboxService.storagearray();
+    $scope.$storage.activated = InboxService.storagearray($scope.messages);
   };
 
   $scope.nonclickedlist = function () {
-    $scope.$storage.activated = InboxService.nonstoragearray();
+    $scope.$storage.activated = InboxService.nonstoragearray($scope.messages);
     $scope.anySelect();
   };
 
@@ -116,6 +118,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   $scope.delete = function () {
     for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
+        $http.post('http://localhost:3000/api/delete', $scope.messages[i]);
         $scope.messages.splice(i,1);
         $scope.$storage.activated.splice(i,1);
       }
@@ -137,11 +140,31 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
           if(filter != "createnew")
           if($scope.messages[i].filters.indexOf(filter)===-1){
             $scope.messages[i].filters.push(filter);
+            $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
           }
         } $scope.create(filter, i);
     }
 
   };
+
+  $scope.addUniqueLabel = function (filter) {
+    for (var i = 0; i < $scope.messages.length; i++) {
+      if($scope.$storage.activated[i]===true){
+        if($scope.messages[i].filters.indexOf(filter)===-1){
+          $scope.messages[i].filters.push(filter);
+        }
+  } $scope.showcreate= false;
+ }
+};
+
+ $scope.removeLabel = function (filter) {
+   for (var i = 0; i < $scope.messages.length; i++) {
+       if($scope.$storage.activated[i]===true){
+         var filterIndex = $scope.messages[i].filters.indexOf(filter);
+         $scope.messages[i].filters.splice(filterIndex,1);
+   }
+ } console.log($scope.messages);
+ };
 
   $scope.stardb = function (message) {
     InboxService.starredmessages(message);
