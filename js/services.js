@@ -46,9 +46,7 @@ var services = {
   //   }
   // },
 
-  singleStar: function (message) {
-    message.starred = !message.starred;
-  },
+
 
   // singleSelect: function (message) {
   //   message.selected= !message.selected;
@@ -107,8 +105,10 @@ var services = {
 
 
     starredmessages: function (message) {
-      console.log(message);
-      $http.post('http://localhost:3000/api/starred', message);
+    return $http.post('http://localhost:3000/api/starred', message).then(function (messages) {
+        return messages.data;
+      });
+
     },
 
     readmessages: function (message) {

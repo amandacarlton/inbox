@@ -14,7 +14,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   });
 
   $scope.name = "amanda";
-  $scope.clicked = false;
+  // $scope.clicked = false;
   $scope.staricon = false;
   $scope.$storage = $localStorage;
 
@@ -29,23 +29,17 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   // $scope.messages = InboxService.messages();
 
 
-  $scope.star = function () {
-    this.staricon = !this.staricon;
-  };
 
-  $scope.singleStar = function () {
-    InboxService.singleStar(this.message);
-  };
+
+
 
   $scope.icon = function () {
-    console.log("check");
-    $scope.clicked=true;
+    $scope.$storage.clicked=true;
     // InboxService.iconButton();
   };
   //
   $scope.noicon = function () {
-    console.log("un check");
-    $scope.clicked=false;
+    $scope.$storage.clicked=false;
     // InboxService.noIconButton();
   };
 
@@ -168,7 +162,11 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   };
 
   $scope.stardb = function (message) {
-    InboxService.starredmessages(message);
+    return InboxService.starredmessages(message).then(function (messages) {
+    
+     $scope.messages = messages;
+   });
+
   };
 
   $scope.filtercheck = function () {
