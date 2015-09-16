@@ -1,9 +1,9 @@
 <div class="container">
-  <i ng-click="nonclickedlist(); noicon()" ng-show="$storage.clicked" class="fa fa-check-square-o btn btn-default"></i>
-  <i ng-click="clickedlist(); icon()" ng-hide="$storage.clicked" class="fa fa-square-o btn btn-default"></i>
-  <i ng-show="anyselected" class="fa fa-plus-square-o btn btn-default"></i>
-  <input ng-click="read(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Read" ng-disabled="!clicked && !anyselected">
-  <input ng-click="unread(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Unread" ng-disabled="!clicked && !anyselected">
+  <i ng-click="nonclickedlist(); noicon()" ng-show="$storage.allclicked" class="fa fa-check-square-o btn btn-default"></i>
+  <i ng-click="clickedlist(); icon()" ng-show="$storage.noneclicked" class="fa fa-square-o btn btn-default"></i>
+  <i ng-show="$storage.anyselected" class="fa fa-plus-square-o btn btn-default"></i>
+  <input ng-click="read(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Read" ng-disabled="!clicked && !$storage.anyselected">
+  <input ng-click="unread(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Unread" ng-disabled="!clicked && !$storage.anyselected">
   <select  id="filter" ng-model="label" ng-change="addlabel(label)" class="btn btn-default">
     <option ng-repeat="filter in filters" value={{filter}}>{{filter}}</option>
   </select>

@@ -9,8 +9,10 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
     $scope.readcount();
     $scope.anySelect();
     $scope.filtercheck();
-    console.log($scope.messages);
-    console.log($scope.messages);
+    console.log($scope.$storage.activated);
+    console.log($scope.$storage.anyselected);
+    console.log($scope.$storage.noneclicked);
+    console.log($scope.$storage.allclicked);
   });
 
   $scope.name = "amanda";
@@ -34,12 +36,14 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
 
   $scope.icon = function () {
-    $scope.$storage.clicked=true;
+    $scope.$storage.allclicked=true;
+    $scope.$storage.noneclicked=false;
     // InboxService.iconButton();
   };
   //
   $scope.noicon = function () {
-    $scope.$storage.clicked=false;
+    $scope.$storage.allclicked=false;
+    $scope.$storage.noneclicked=true;
     // InboxService.noIconButton();
   };
 
@@ -50,10 +54,18 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
         test.push(true);
       }
     }
-    if(test.length>0){
-      $scope.anyselected = true;
-    }else{
-      $scope.anyselected = false;
+    if(test.length>0 && test.length<$scope.messages.length){
+      $scope.$storage.anyselected = true;
+      $scope.$storage.allclicked=false;
+      $scope.$storage.noneclicked=false;
+    }else if($scope.messages.length===test.length){
+      $scope.$storage.anyselected = false;
+      $scope.$storage.allclicked=true;
+      $scope.$storage.noneclicked=false;
+    }else if (test.length===0){
+      $scope.$storage.anyselected = false;
+      $scope.$storage.allclicked=false;
+      $scope.$storage.noneclicked=true;
     }
   };
 
@@ -71,6 +83,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
   $scope.clickedlist = function () {
     $scope.$storage.activated = InboxService.storagearray($scope.messages);
+    $scope.anySelect();
   };
 
   $scope.nonclickedlist = function () {
@@ -163,7 +176,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
   $scope.stardb = function (message) {
     return InboxService.starredmessages(message).then(function (messages) {
-    
+
      $scope.messages = messages;
    });
 
