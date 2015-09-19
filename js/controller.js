@@ -112,6 +112,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   };
 
   $scope.unread = function () {
+    $scope.test = "test";
     for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
         $scope.messages[i].read = false;
@@ -135,7 +136,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
   $scope.create = function (filter, i) {
     if($scope.$storage.activated[i]===true){
-      if(filter === "createnew")
+      if(filter === "Create New")
       $scope.showcreate = true;
     }
   };
@@ -143,8 +144,8 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   $scope.addlabel = function (filter) {
     for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
-        if(filter != "applyfilter")
-        if(filter != "createnew")
+        if(filter != "Apply Filter")
+        if(filter != "Create New")
         if($scope.messages[i].filters.indexOf(filter)===-1){
           $scope.messages[i].filters.push(filter);
           $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
@@ -159,6 +160,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
       if($scope.$storage.activated[i]===true){
         if($scope.messages[i].filters.indexOf(filter)===-1){
           $scope.messages[i].filters.push(filter);
+          $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
         }
       } $scope.showcreate= false;
     }
