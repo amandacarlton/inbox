@@ -1,13 +1,16 @@
 <div class="container">
   <i ng-click="nonclickedlist(); noicon()" ng-show="$storage.allclicked" class="fa fa-check-square-o btn btn-default"></i>
   <i ng-click="clickedlist(); icon()" ng-show="$storage.noneclicked" class="fa fa-square-o btn btn-default"></i>
-  <i ng-show="$storage.anyselected" class="fa fa-plus-square-o btn btn-default"></i>
+  <i ng-show="$storage.anyselected" class="fa fa-minus-square-o btn btn-default"></i>
   <input ng-click="read(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Read" ng-disabled="!clicked && !$storage.anyselected">
   <input ng-click="unread(); readdb(message)" type="submit" class="btn btn-default" value="Mark As Unread" ng-disabled="!clicked && !$storage.anyselected">
   <select  id="filter" ng-model="label"  ng-change="addlabel(label)" class="btn btn-default">
+    <option value="Apply Filter">Apply Filter</option>
     <option ng-repeat="filter in filters" value={{filter}}>{{filter}}</option>
+    <option value="Create New">Create New</option>
   </select>
   <select  id="filter" ng-model="labeloff" ng-change="removeLabel(label)" class="btn btn-default">
+    <option value="Remove Filter">Remove Filter</option>
     <option ng-repeat="filter in filters" value={{filter}}>{{filter}}</option>
   </select>
   <i ng-click="delete()" class="fa fa-trash-o btn btn-default"></i>
@@ -19,7 +22,7 @@
                      'other': 'Messages',
                    'NAN': '0'}">
 </ng-pluralize> : {{unreadcount}}
-  <div class = "each" ng-repeat = "message in messages track by $index" ng-class="{'highlight':$storage.activated[$index], 'bold':!messages[$index].read, 'normal':messages[$index].read}">
+  <div class = "each" ng-repeat = "message in messages |filter:searchbar track by $index" ng-class="{'highlight':$storage.activated[$index], 'bold':!messages[$index].read, 'normal':messages[$index].read}">
     <div class="check">
     <input ng-click="submitindex($index); anySelect()" type="checkbox" ng-checked="$storage.activated[$index]">
     </div>
@@ -28,7 +31,7 @@
       <i ng-click="stardb(message)" ng-show="message.starred" class="fa fa-star"></i>
     </div>
     <div class="message">
-      <div class="filtered" ng-repeat="filter in message.filters | orderBy:'toString()'">
+      <div class="filtered" ng-repeat="filter in message.filters | orderBy:'toString()' ">
         {{filter}}
       </div>
     <div class="subject">

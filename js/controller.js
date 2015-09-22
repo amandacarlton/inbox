@@ -185,7 +185,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
   };
 
   $scope.filtercheck = function () {
-    var selectlabel = ["Apply Filter", "Create New"];
+    var selectlabel = [];
     for (var i = 0; i < $scope.messages.length; i++) {
       for (var j = 0; j < $scope.messages[i].filters.length; j++) {
         if(selectlabel.indexOf($scope.messages[i].filters[j])<0){

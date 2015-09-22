@@ -56,3 +56,28 @@ select{
 .normal{
   background-color: LightGrey;
 }
+
+.navbar-default{
+  background-color: #F1F1F1
+}
+
+.navbar-header{
+  float: left;
+}
+
+.form-group{
+  float:left;
+
+}
+
+.search{
+  height:25px !important;
+  width:300px;
+  margin-top: 14px;
+  margin-left: 150px;
+}
+
+.fa-search{
+  height: 30px;
+
+}
