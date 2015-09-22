@@ -151,7 +151,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
           $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
         }
       } $scope.create(filter, i);
-    }
+    } $scope.label="Apply Filter";
 
   };
 
@@ -163,17 +163,20 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
           $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
         }
       } $scope.showcreate= false;
-    }
+    } $scope.filtercheck();
+     $scope.label="Apply Filter";
   };
 
   $scope.removeLabel = function (filter) {
     for (var i = 0; i < $scope.messages.length; i++) {
       if($scope.$storage.activated[i]===true){
         var filterIndex = $scope.messages[i].filters.indexOf(filter);
+        if(filterIndex>-1)
         $scope.messages[i].filters.splice(filterIndex,1);
         $http.post('http://localhost:3000/api/labels', $scope.messages[i]);
       }
-    }
+    } $scope.filtercheck();
+    $scope.labeloff="Remove Filter";
   };
 
   $scope.stardb = function (message) {
