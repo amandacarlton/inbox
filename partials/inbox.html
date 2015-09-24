@@ -1,4 +1,9 @@
 <div class="container">
+  <div class="newcomp">
+    <input type="submit" ng-click="open('sm')"class="btn btn-danger">
+    <p class="red"> Inbox ({{unreadcount}})</p>
+  </div>
+  <div class=main>
   <i ng-click="nonclickedlist(); noicon()" ng-show="$storage.allclicked" class="fa fa-check-square-o btn btn-default"></i>
   <i ng-click="clickedlist(); icon()" ng-show="$storage.noneclicked" class="fa fa-square-o btn btn-default"></i>
   <i ng-show="$storage.anyselected" class="fa fa-minus-square-o btn btn-default" ng-click="nonclickedlist()"></i>
@@ -17,11 +22,11 @@
   <form ng-submit="addUniqueLabel(filterinput)">
   <input type="text" ng-model="filterinput" ng-show="showcreate" placeholder="new label"></input>
 </form>
-  <p> Unread <ng-pluralize count="unreadcount"
+  <!-- <p> Unread <ng-pluralize count="unreadcount"
                    when="{1: 'Message',
                      'other': 'Messages',
                    'NAN': '0'}">
-</ng-pluralize> : {{unreadcount}}
+</ng-pluralize> : {{unreadcount}} -->
   <div class = "each" ng-repeat = "message in messages |filter:searchbar track by $index" ng-class="{'highlight':$storage.activated[$index], 'bold':!messages[$index].read, 'normal':messages[$index].read}">
     <div class="check">
     <input ng-click="submitindex($index); anySelect()" type="checkbox" ng-checked="$storage.activated[$index]">
@@ -34,9 +39,11 @@
       <div class="filtered" ng-repeat="filter in message.filters | orderBy:'toString()' | filter:searchbar">
         {{filter}}
       </div>
-    <div class="subject">
+    <div class="subject" ng-click="open('sm')">
     {{message.subject}}
   </div>
   </div>
   </div>
+</div>
+
 </div>

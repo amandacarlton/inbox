@@ -1,7 +1,7 @@
 
 
 app.controller("InboxController", ['$scope', 'InboxService', '$location', '$localStorage',
-'$sessionStorage', 'ModalService', '$http', function ($scope, InboxService, $location, $localStorage, $sessionStorage, ModalService, $http ) {
+'$sessionStorage', '$http', '$modal', '$log', 'ModalService', function ($scope, InboxService, $location, $localStorage, $sessionStorage, $http, $modal, $log, ModalService ) {
 
   InboxService.messages().then(function (messages) {
 
@@ -204,6 +204,75 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
 
 
+  $scope.open = function (size) {
+
+      var modalInstance = $modal.open({
+        // animation: $scope.animationsEnabled,
+        templateUrl: './partials/modal.html',
+        controller: function ($scope, $modalInstance){
+          // $scope.message = message;
+        },
+        size: size,
+        resolve: {
+          messages: function () {
+            return $scope.messages;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        // $scope.selected = selectedItem;
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+};
+
+
+// $scope.openLabelModal = function (size) {
+//
+//     var modalInstance = $modal.open({
+//       animation: $scope.animationsEnabled,
+//       templateUrl: './partials/labelmodal.html',
+//       controller: function ($scope, $modalInstance) {
+//         $scope.cancel = function () {
+//         $modalInstance.dismiss('cancel');
+//         };
+//         $scope.ok = function (label) {
+//         //     var promises = [];
+//         //     selectedEmails.forEach(function (selected, i) {
+//         //       if (selected) {
+//         //         if (allEmails[i].filters.indexOf(label) < 0) {
+//         //           allEmails[i].filters.push(label);
+//         //           promises.push($http.post('https://lit-falls-5507.herokuapp.com/api/filters', allEmails[i]));
+//         //         }
+//         //       }
+//         //     });
+//         //     return Promise.all(promises)
+//         //   .then(function (emails) {
+//         //     $modalInstance.close(emails);
+//         //   });
+//         // };
+//        };
+//       },
+//       size: size,
+//       resolve: {
+//         selectedEmails: function () {
+//           return selectedEmails;
+//         },
+//         allEmails: function () {
+//           return allEmails;
+//         }
+//       }
+//     });
+//
+//     modalInstance.result.then(function (results) {
+//       // $scope.emails = results[results.length-1].data.reverse();
+//       // $scope.populateLabels();
+//       // $scope.selectedLabel="Apply Label";
+//     }, function () {
+//       $log.info('Modal dismissed at: ' + new Date());
+//     });
+//   };
 
 
 

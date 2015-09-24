@@ -81,3 +81,47 @@ select{
   height: 30px;
 
 }
+
+.newcomp{
+  float: left;
+  width: 15%;
+
+
+}
+
+.main{
+  float: left;
+  width: 70%;
+
+}
+
+.red{
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.center{
+  text-align: center;
+}
+
+
+
+.modal {
+    display: block;
+    position:relative;
+    margin: auto;
+    left: 50px;
+    width: 585px;
+    height: 294px;
+}
+.modal-body:before,
+.modal-body:after {
+    display: table;
+    content: " ";
+}
+.modal-header:before,
+.modal-header:after {
+    display: table;
+    content: " ";
+}
