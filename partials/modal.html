@@ -1,13 +1,13 @@
 <div ng-controller="InboxController">
 <div class="modal-header center">
-        <h3 class="modal-title">I'm a modal!</h3>
+        <!-- <h3 class="modal-title"></h3> -->
       </div>
       <div class="modal-body">
-      <h1>test</h1>
-      <p> shoooooooooooooooooooooooooooooooooooooooooooooooooooooo</p>
+      <h1>Compose Message</h1>
+      <input type="text" ng-model="newMessage" placeholder="create a message">
       </div>
       <div class="modal-footer">
-          <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+          <button class="btn btn-primary" type="button" ng-click="ok(newMessage)">OK</button>
           <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
       </div>
 </div>

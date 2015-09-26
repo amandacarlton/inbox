@@ -210,7 +210,14 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
         // animation: $scope.animationsEnabled,
         templateUrl: './partials/modal.html',
         controller: function ($scope, $modalInstance){
-          // $scope.message = message;
+          $scope.ok= function (newMessage) {
+            console.log(newMessage);
+          $http.post('http://localhost:3000/api/insert', newMessage);
+          $scope.cancel();
+        };
+          $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+        };
         },
         size: size,
         resolve: {
@@ -227,7 +234,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
       });
 };
 
-
+console.log($scope.open);
 // $scope.openLabelModal = function (size) {
 //
 //     var modalInstance = $modal.open({
