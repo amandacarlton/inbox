@@ -1,7 +1,11 @@
 
 
+
+
+
+
 app.controller("InboxController", ['$scope', 'InboxService', '$location', '$localStorage',
-'$sessionStorage', '$http', '$modal', '$log', 'ModalService', function ($scope, InboxService, $location, $localStorage, $sessionStorage, $http, $modal, $log, ModalService ) {
+'$sessionStorage', '$http', 'ModalService', function ($scope, InboxService, $location, $localStorage, $sessionStorage, $http, ModalService ) {
 
   InboxService.messages().then(function (messages) {
 
@@ -204,37 +208,37 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
 
 
-  $scope.open = function (size) {
+//   $scope.open = function (size) {
+//
+//       var modalInstance = $modal.open({
+//         // animation: $scope.animationsEnabled,
+//         templateUrl: './partials/modal.html',
+//         controller: function ($scope, $modalInstance){
+//           $scope.ok= function (newMessage) {
+//             console.log(newMessage);
+//           $http.post('http://localhost:3000/api/insert', newMessage);
+//           $scope.cancel();
+//         };
+//           $scope.cancel = function () {
+//         $modalInstance.dismiss('cancel');
+//         };
+//         },
+//         size: size,
+//         resolve: {
+//           messages: function () {
+//             return $scope.messages;
+//           }
+//         }
+//       });
+//
+//       modalInstance.result.then(function () {
+//         // $scope.selected = selectedItem;
+//       }, function () {
+//         $log.info('Modal dismissed at: ' + new Date());
+//       });
+// };
 
-      var modalInstance = $modal.open({
-        // animation: $scope.animationsEnabled,
-        templateUrl: './partials/modal.html',
-        controller: function ($scope, $modalInstance){
-          $scope.ok= function (newMessage) {
-            console.log(newMessage);
-          $http.post('http://localhost:3000/api/insert', newMessage);
-          $scope.cancel();
-        };
-          $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-        };
-        },
-        size: size,
-        resolve: {
-          messages: function () {
-            return $scope.messages;
-          }
-        }
-      });
 
-      modalInstance.result.then(function () {
-        // $scope.selected = selectedItem;
-      }, function () {
-        $log.info('Modal dismissed at: ' + new Date());
-      });
-};
-
-console.log($scope.open);
 // $scope.openLabelModal = function (size) {
 //
 //     var modalInstance = $modal.open({
@@ -281,7 +285,43 @@ console.log($scope.open);
 //     });
 //   };
 
+// $scope.showConsentModal = function(survey_id) {
+//    ModalService.showModal({
+//      templateUrl: "/partials/users/consent.html",
+//      controller: "ConsentController"
+//    }).then(function(modal) {
+//      modal.element.modal();
+//      modal.close.then(function(result) {
+//      });
+//    });
+//  }
+//
+//  $scope.dismissModal = function(result) {
+//     close(result, 200);
+//     $location.path('/')
+//  };
 
+
+
+  $scope.open = function() {
+        ModalService.showModal({
+            templateUrl: './partials/modal.html',
+            controller: "ModalController"
+        }).then(function(modal) {
+            modal.element.modal();
+            modal.close.then(function(result) {
+                $scope.message = "You said " + result;
+            });
+        });
+    };
 
 
 }]);
+
+
+app.controller('ModalController', function($scope, close) {
+
+ $scope.close = function(result) {
+ 	close(result); // close, but give 500ms for bootstrap to animate
+ };
+ });
