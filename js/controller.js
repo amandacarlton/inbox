@@ -40,6 +40,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
 
   $scope.icon = function () {
+    var icons = [];
     $scope.$storage.allclicked=true;
     $scope.$storage.noneclicked=false;
     // InboxService.iconButton();
@@ -321,7 +322,7 @@ app.controller("InboxController", ['$scope', 'InboxService', '$location', '$loca
 
 app.controller('ModalController', function($scope, close, $http) {
   $scope.ok = function (newMessage) {
-    console.log(newMessage);
+
    $http.post('http://localhost:3000/api/insert', {newMessage:newMessage});
   };
 
